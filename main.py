@@ -1,6 +1,8 @@
 # coding:utf-8
 from flask import Flask, request, abort
 import os
+import re
+import datetime
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -25,6 +27,10 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 def hello_world():
     return "hello world!"
 
+@app.route("/callback")
+def webhook():
+    return "hello webhook!"
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -44,13 +50,21 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = "hello"
-    if re.match(r"こんにちは",event.message.text):
-        message = "hi"
-        line_bot_api.reply_message(
-            event.reply_token,
-            # TextSendMessage(text=event.message.text))
-            TextSendMessage(text="mako"))
+    resMessage = "へー"
+    reqMessage = event.message.text
+    if re.match(r"こんにちは",reqMessage):
+        resMessage = "こんにちは"
+    elif re.match(r"日付",reqMessage):
+        date_now = datetime.datetime.now()
+        resMessage = date_now.strftime('%Y年%m月%d日')
+    elif re.match(r"時間",reqMessage):
+        time_now = datetime.datetime.now()
+        resMessage = time_now.strftime("%H:%M:%S")
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        # TextSendMessage(text=event.message.text))
+        TextSendMessage(text=resMessage))
 
 if __name__ == "__main__":
 #    app.run()
