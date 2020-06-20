@@ -3,6 +3,7 @@ from flask import Flask, request, abort
 import os
 import re
 import datetime
+import random
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -52,7 +53,8 @@ def callback():
 def handle_message(event):
     if event.reply_token == "00000000000000000000000000000000":
         return
-    resMessage = "へー"
+    Msa = ["へー","それでそれで？","で？","すごいすごい","大丈夫？","なんでやねん"]
+    resMessage = random.choice(Msa)
     reqMessage = event.message.text
     if re.match(r"こんにちは",reqMessage):
         resMessage = "こんにちは"
@@ -62,16 +64,11 @@ def handle_message(event):
     elif re.match(r"時間",reqMessage):
         time_now = datetime.datetime.now()
         resMessage = time_now.strftime("%H:%M:%S")
-    elif re.match(r"楽天",reqMessage):
-        resMessage = "アンリミット？or 料金？"
-        if re.match(r"アンリミット",reqMessage):
-            resMessage = "300万名対象でプランは月々2980円" \
-                         "楽天エリアは完全使い放題" \
-                         "パートナーエリアは月5GB使えるよ" \
-                         "超過後は最大1Mbpsで使い放題" \
-                         "海外66の国と地域グローバル無料" \
-                         "グローバルの場合はデータ量は2GB" \
-                         "超過後は最大128kbps"
+    elif re.match(r".*ありがとう",reqMessage) or re.match(r".*ありがとうございます",reqMessage):
+        resMessage = "どういたしまして"
+
+
+
 
     line_bot_api.reply_message(
         event.reply_token,
