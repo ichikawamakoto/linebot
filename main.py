@@ -68,11 +68,10 @@ def handle_message(event):
     elif re.match(r".*ありがとう",reqMessage) or re.match(r".*ありがとうございます",reqMessage):
         resMessage = "どういたしまして"
     elif reqMessage == "言語":
-
         items = [QuickReplyButton(action=MessageAction(label=f"{language}", text=f"{language}が好き")) for language in
                  language_list]
 
-        messages = TextSendMessage(text="どの言語が好きですか？",
+        resMessage = TextSendMessage(text="どの言語が好きですか？",
                                    quick_reply=QuickReply(items=items))
 
 
