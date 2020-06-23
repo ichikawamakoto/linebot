@@ -54,7 +54,6 @@ def handle_message(event):
     if event.reply_token == "00000000000000000000000000000000":
         return
     Msa = ["へー","それでそれで？","で？","すごいすごい","大丈夫？","なんでやねん"]
-    language_list = ["Ruby", "Python", "PHP", "Java", "C"]
     resMessage = random.choice(Msa)
     reqMessage = event.message.text
     if re.match(r"こんにちは",reqMessage):
@@ -67,12 +66,9 @@ def handle_message(event):
         resMessage = time_now.strftime("%H:%M:%S")
     elif re.match(r".*ありがとう",reqMessage) or re.match(r".*ありがとうございます",reqMessage):
         resMessage = "どういたしまして"
-    elif reqMessage == "言語":
-        items = [QuickReplyButton(action=MessageAction(label=f"{language}", text=f"{language}が好き")) for language in
-                 language_list]
-
-        resMessage = TextSendMessage(text="どの言語が好きですか？",
-                                   quick_reply=QuickReply(items=items))
+    elif re.match(r".*褒めて",reqMessage):
+        homeru = ["すごいやん","やるやん","よくやった","君は天才だ！"]
+        resMessage = random.choice(homeru)
 
 
     line_bot_api.reply_message(
