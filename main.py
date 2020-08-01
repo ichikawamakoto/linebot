@@ -69,6 +69,8 @@ def handle_message(event):
     elif re.match(r".*褒めて",reqMessage):
         homeru = ["すごいやん","やるやん","よくやった","君は天才だ！"]
         resMessage = random.choice(homeru)
+    elif re.match(r"高輪のパスワード",reqMessage):
+        resMessage = "dp968604"
 
 
     line_bot_api.reply_message(
