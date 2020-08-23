@@ -71,6 +71,8 @@ def handle_message(event):
         resMessage = random.choice(homeru)
     elif re.match(r"高輪のパスワード",reqMessage):
         resMessage = "dp968604"
+    elif re.match(r".*googleアカウント",reqMessage) or re.match(r".*グーグルアカウント"):
+        resMessage = "dppts0044"
 
 
     line_bot_api.reply_message(
